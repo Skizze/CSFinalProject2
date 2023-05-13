@@ -150,9 +150,11 @@ class Controller(QMainWindow, Ui_MainWindow):
                 newWord += self.toLetter(self.alphabet[letter] + shift)
         else:
             for letter in word:
-                if letter == " ":
-                    newWord += " "
+                if letter == " " or letter == "." or letter == "!" or letter == "?" or letter == ",":
+                    newWord += letter
                     continue
+                if letter not in self.alphabet:
+                    raise Exception("Invalid symbol present\nin message.")
                 newWord += self.toLetter(self.alphabet[letter] - shift)
         return newWord
 
@@ -181,9 +183,11 @@ class Controller(QMainWindow, Ui_MainWindow):
                 newWord += self.caesar(word[i:i + 1], crib[i % len(crib)], True)
         else:
             for i in range(0, len(word)):
-                if word[i:i + 1] == " ":
-                    newWord += " "
+                if word[i:i + 1] == " " or word[i:i + 1] == "." or word[i:i + 1] == "!" or word[i:i + 1] == "?" or word[i:i + 1] == ",":
+                    newWord += word[i:i + 1]
                     continue
+                if word[i:i + 1] not in self.alphabet:
+                    raise Exception("Invalid symbol in message\nonly letter a-z\nand punctuation")
                 newWord += self.caesar(word[i:i + 1], crib[i % len(crib)], False)
         return newWord
 
@@ -211,9 +215,11 @@ class Controller(QMainWindow, Ui_MainWindow):
                 newWord += self.toLetter(self.alphabet[letter] * a + b)
         else:
             for letter in word:
-                if letter == " ":
-                    newWord += " "
+                if letter == " " or letter == "." or letter == "!" or letter == "?" or letter == ",":
+                    newWord += letter
                     continue
+                if letter not in self.alphabet:
+                    raise Exception("Invalid symbol in message\nonly letters a-z\nand punctuation.")
                 value = self.alphabet[letter]
                 while (value - b) % a != 0:
                     value += 26
